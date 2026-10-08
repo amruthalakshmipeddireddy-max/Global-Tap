@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <title>Log in - Global Travel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+  <main class="auth-wrap">
+    <div class="auth-card">
+      <h1>Global Travel</h1>
+      <p class="auth-sub">Log in to use UPI in India and International Pay when you travel.</p>
+
+      <div class="form-error" id="loginError"></div>
+
+      <form id="loginForm">
+        <label class="field">Email
+          <input type="email" id="loginEmail" required autocomplete="email" placeholder="you@example.com" />
+        </label>
+        <label class="field">Password
+          <input type="password" id="loginPassword" required autocomplete="current-password" placeholder="Your password" />
+        </label>
+        <button class="auth-btn" type="submit">Log in</button>
+      </form>
+
+      <p class="auth-switch">New here? <a href="signup.html">Create an account</a></p>
+      <p class="auth-note">Prototype: accounts and verification emails are handled by Supabase.</p>
+    </div>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script>
+    // Already logged in? Skip straight to the app.
+    if (gtToken()) {
+      window.location.href = 'index.html';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      try {
+        var data = await gtApi('/api/auth/login', {
+          method: 'POST',
+          body: {
+            email: document.getElementById('loginEmail').value.trim(),
+            password: document.getElementById('loginPassword').value,
+          },
+        });
+        localStorage.setItem('gt_token', data.token);
+        window.location.href = 'index.html';
+      } catch (err) {
+        showFormError('loginError', err.message);
+      }
+    });
+  </script>
+</body>
+</html>
