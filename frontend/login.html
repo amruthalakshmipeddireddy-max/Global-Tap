@@ -11,9 +11,38 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="css/effects.css" />
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.module.js"
+    }
+  }
+  </script>
 </head>
 <body>
-  <main class="auth-wrap">
+  <canvas id="bg-canvas" class="bg-canvas" aria-hidden="true"></canvas>
+  <div class="bg-scrim" id="bgScrim"></div>
+
+  <div class="country-step" id="countryStep">
+    <div class="country-card">
+      <h2>Which country are you from?</h2>
+      <p>Your animated background will match your country.</p>
+      <div class="country-grid">
+        <button type="button" data-country="IN">India</button>
+        <button type="button" data-country="JP">Japan</button>
+        <button type="button" data-country="CN">China</button>
+        <button type="button" data-country="US">United States</button>
+        <button type="button" data-country="AE">UAE</button>
+        <button type="button" data-country="GB">United Kingdom</button>
+        <button type="button" data-country="SG">Singapore</button>
+      </div>
+      <p class="country-note">Japan and China open the night temple. India opens a temple under the stars.</p>
+      <button type="button" class="country-skip" id="countrySkip">Skip background</button>
+    </div>
+  </div>
+
+  <main class="auth-wrap" id="authWrap">
     <div class="auth-card">
       <h1>Global Tap</h1>
       <p class="auth-sub">Log in to use UPI in India and International Pay when you travel.</p>
@@ -58,6 +87,38 @@
         showFormError('loginError', err.message);
       }
     });
+  </script>
+  <script type="module">
+    import { startCountryBackground } from './effects/country-background.js';
+
+    var canvas = document.getElementById('bg-canvas');
+    var step = document.getElementById('countryStep');
+    var wrap = document.getElementById('authWrap');
+    var scrim = document.getElementById('bgScrim');
+
+    function showAuth() {
+      step.classList.add('hidden');
+      wrap.classList.add('visible');
+      scrim.classList.add('visible');
+    }
+
+    function begin(code) {
+      try { localStorage.setItem('gt_country', code); } catch (e) {}
+      showAuth();
+      startCountryBackground(canvas, code);
+    }
+
+    var saved = null;
+    try { saved = localStorage.getItem('gt_country'); } catch (e) {}
+
+    if (saved) {
+      begin(saved);
+    } else {
+      step.querySelectorAll('[data-country]').forEach(function (b) {
+        b.addEventListener('click', function () { begin(b.getAttribute('data-country')); });
+      });
+      document.getElementById('countrySkip').addEventListener('click', showAuth);
+    }
   </script>
 </body>
 </html>

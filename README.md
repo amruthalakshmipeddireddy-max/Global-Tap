@@ -79,6 +79,31 @@ If you deploy the backend somewhere else, change `GT_API_BASE` at the
 top of `frontend/js/auth.js` to its address, and set `FRONTEND_URL` in
 `backend/.env` to your frontend address.
 
+## Animated country backgrounds
+
+The opening pages (`frontend/login.html`, `frontend/signup.html`) first ask
+"Which country are you from?" and then play a full-screen animated 3D
+background behind the sign-in/sign-up card. The choice is remembered in the
+browser, so returning visitors skip the question.
+
+- Japan and China (and every other country for now) play the procedural
+  night temple scene: `frontend/effects/temple-night/templeNightRenderer.js`.
+  This file is used verbatim from its published source and verified by
+  SHA-256; the vanilla-JS host in `frontend/effects/temple-night/host.js`
+  adapts it to this project (no React here).
+- India plays an original Indian temple night scene built for this app:
+  `frontend/effects/india-night/indiaNight.js` (gopuram, diyas, embers,
+  mist, moon, pointer parallax).
+- `frontend/effects/country-background.js` maps country codes to scenes.
+  Add new codes there as new scenes are created.
+- Styling for the canvas and the country question lives in
+  `frontend/css/effects.css`.
+
+Three.js r149 loads from a CDN link (pinned in an import map on the auth
+pages), so the pages need internet access for the 3D background. If it
+fails to load, the pages still work; there is also a "Skip background"
+option.
+
 ## Where to edit what
 
 - Screen text: `frontend/index.html`, `frontend/login.html`, `frontend/signup.html`

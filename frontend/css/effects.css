@@ -1,0 +1,125 @@
+/* Animated country background for the opening (sign-in/sign-up) pages. */
+
+.bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.bg-canvas.is-ready {
+  opacity: 1;
+}
+
+/* Readability scrim between the 3D background and the cards. */
+.bg-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 7, 15, 0.5);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s ease;
+  pointer-events: none;
+}
+
+.bg-scrim.visible {
+  opacity: 1;
+}
+
+/* The auth card stays hidden until a country is chosen. */
+.auth-wrap {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.auth-wrap.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* First step: "Which country are you from?" */
+.country-step {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  transition: opacity 0.6s ease, visibility 0.6s;
+}
+
+.country-step.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.country-card {
+  width: 100%;
+  max-width: 440px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+}
+
+.country-card h2 {
+  font-size: 22px;
+  margin: 0 0 6px;
+}
+
+.country-card p {
+  color: var(--muted);
+  font-size: 14px;
+  margin: 0 0 20px;
+  line-height: 1.5;
+}
+
+.country-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.country-grid button {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  padding: 13px 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.country-grid button:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.country-note {
+  margin: 18px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.country-skip {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
