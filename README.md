@@ -1,6 +1,6 @@
-# Global Travel (Global-Tap)
+# Global Tap (Global-Tap)
 
-A simple, clean prototype of the Global Travel app: UPI payments in India and
+A simple, clean prototype of the Global Tap app: UPI payments in India and
 a separate International Pay experience when travelling abroad. Includes
 login and sign-up pages with email verification, and a Node.js backend that
 stores user information in Supabase.

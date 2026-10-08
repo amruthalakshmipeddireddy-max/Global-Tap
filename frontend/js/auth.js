@@ -1,4 +1,4 @@
-// Shared login/signup helpers for the Global Travel frontend.
+// Shared login/signup helpers for the Global Tap frontend.
 //
 // API_BASE: where the backend runs. If you deploy the backend somewhere
 // else, change this one line to its address.

@@ -1,4 +1,4 @@
-// Global Travel backend.
+// Global Tap backend.
 // Setup: copy .env.example to .env and fill it in, then run:
 //   npm install
 //   node server.js
@@ -19,5 +19,5 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/profile', require('./routes/profile'));
 
 app.listen(PORT, () => {
-  console.log('Global Travel backend running on port ' + PORT);
+  console.log('Global Tap backend running on port ' + PORT);
 });
